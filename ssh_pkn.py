@@ -328,6 +328,24 @@ DOCUMENTATION = '''
         vars:
             - name: ansible_ssh_transfer_method
               version_added: '2.12'
+      scp_if_ssh:
+        deprecated:
+              why: In favor of the O(ssh_transfer_method) option.
+              version: "2.17"
+              alternatives: O(ssh_transfer_method)
+        default: smart
+        description:
+          - "Preferred method to use when transferring files over SSH."
+          - When set to V(smart), Ansible will try them until one succeeds or they all fail.
+          - If set to V(True), it will force 'scp', if V(False) it will use 'sftp'.
+          - For OpenSSH >=9.0 you must add an additional option to enable scp (C(scp_extra_args="-O"))
+          - This setting will overridden by O(ssh_transfer_method) if set.
+        env: [{name: ANSIBLE_SCP_IF_SSH}]
+        ini:
+        - {key: scp_if_ssh, section: ssh_connection}
+        vars:
+          - name: ansible_scp_if_ssh
+            version_added: '2.7'
       use_tty:
         version_added: '2.5'
         default: true
